@@ -6,7 +6,7 @@ var React = require("react");
 var ReactTestingLibrary = require("bs-react-testing-library/src/ReactTestingLibrary.bs.js");
 var Box$ReactHooksTemplate = require("../Box.bs.js");
 
-Jest.test("<App />", (function (param) {
+Jest.test("<Box />", (function (param) {
         var eta = React.createElement(Box$ReactHooksTemplate.make, {
               p: /* `sc */[
                 25744,
@@ -15,6 +15,35 @@ Jest.test("<App />", (function (param) {
               children: "from box"
             });
         var result = ReactTestingLibrary.render(undefined, undefined, eta);
+        console.log(Box$ReactHooksTemplate.System[/* make */1](/* `sc */[
+                  25744,
+                  3
+                ], /* `sc */[
+                  25744,
+                  3
+                ], /* `sc */[
+                  25744,
+                  3
+                ], /* `sc */[
+                  25744,
+                  3
+                ], /* `sc */[
+                  25744,
+                  3
+                ], /* `sc */[
+                  25744,
+                  3
+                ], /* `sc */[
+                  25744,
+                  3
+                ]));
+        console.log(Box$ReactHooksTemplate.System[/* make */1](/* `sc */[
+                  25744,
+                  3
+                ], undefined, undefined, undefined, undefined, /* `sc */[
+                  25744,
+                  9
+                ], undefined));
         var element = ReactTestingLibrary.getByText(/* `Str */[
               4153489,
               "from box"

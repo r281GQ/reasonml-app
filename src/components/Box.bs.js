@@ -4,9 +4,42 @@
 var Css = require("bs-css/src/Css.js");
 var React = require("react");
 
+function calculate(main, axis, individual) {
+  if (individual !== undefined) {
+    return individual;
+  } else if (axis !== undefined) {
+    return axis;
+  } else if (main !== undefined) {
+    return main;
+  } else {
+    return /* zero */-789508312;
+  }
+}
+
+function make(p, pt, pr, pb, pl, px, py) {
+  return /* record */[
+          /* paddingTop */calculate(p, py, pt),
+          /* paddingBottom */calculate(p, py, pb),
+          /* paddingLeft */calculate(p, px, pl),
+          /* paddingRight */calculate(p, px, pr)
+        ];
+}
+
+var System = /* module */[
+  /* calculate */calculate,
+  /* make */make
+];
+
 function Box(Props) {
-  Props.p;
+  var p = Props.p;
+  var pt = Props.pt;
+  var pr = Props.pr;
+  var pb = Props.pb;
+  var pl = Props.pl;
+  var px = Props.px;
+  var py = Props.py;
   var children = Props.children;
+  make(p, pt, pr, pb, pl, px, py);
   return React.createElement("div", {
               className: Css.style(/* :: */[
                     Css.padding(Css.px(10)),
@@ -15,7 +48,8 @@ function Box(Props) {
             }, children);
 }
 
-var make = Box;
+var make$1 = Box;
 
-exports.make = make;
+exports.System = System;
+exports.make = make$1;
 /* Css Not a pure module */
