@@ -4,17 +4,20 @@
 var Jest = require("@glennsl/bs-jest/src/jest.js");
 var React = require("react");
 var ReactTestingLibrary = require("bs-react-testing-library/src/ReactTestingLibrary.bs.js");
+var Box$ReactHooksTemplate = require("../Box.bs.js");
 
 Jest.test("<App />", (function (param) {
-        var eta = React.createElement("div", {
-              style: {
-                color: "rebeccapurple"
-              }
-            }, React.createElement("h1", undefined, "Heading"));
+        var eta = React.createElement(Box$ReactHooksTemplate.make, {
+              p: /* `sc */[
+                25744,
+                9
+              ],
+              children: "from box"
+            });
         var result = ReactTestingLibrary.render(undefined, undefined, eta);
         var element = ReactTestingLibrary.getByText(/* `Str */[
               4153489,
-              "Heading"
+              "from box"
             ], undefined, result);
         return Jest.Expect[/* toMatchSnapshot */16](Jest.Expect[/* expect */0](element));
       }));

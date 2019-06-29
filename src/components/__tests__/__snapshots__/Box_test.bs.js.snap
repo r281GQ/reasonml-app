@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<App /> 1`] = `
-<h1>
-  Heading
-</h1>
+<div>
+  from box
+</div>
 `;

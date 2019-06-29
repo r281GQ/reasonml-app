@@ -2,7 +2,7 @@ open Jest;
 open Expect;
 open ReactTestingLibrary;
 
-test("Component renders", () => {
+test("<App />", () => {
   let result =
     <div style={ReactDOMRe.Style.make(~color="rebeccapurple", ())}>
       <h1> {ReasonReact.string("Heading")} </h1>
