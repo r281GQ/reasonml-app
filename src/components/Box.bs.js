@@ -29,12 +29,11 @@ function calculate(main, axis, individual) {
   }
 }
 
-function make(p, pt, pr, pb, pl, px, py) {
-  var value = calculate(p, py, pt);
-  if (typeof value === "number" || value[0] !== 25744) {
-    return value;
+function convert(x) {
+  if (typeof x === "number" || x[0] !== 25744) {
+    return x;
   } else {
-    var v = value[1];
+    var v = x[1];
     return Belt_Option.mapWithDefault(Belt_Array.get(spacing, v), /* `px */[
                 25096,
                 v
@@ -47,9 +46,47 @@ function make(p, pt, pr, pb, pl, px, py) {
   }
 }
 
+function convertMargin(a) {
+  if (typeof a === "number" || a[0] !== 25744) {
+    return a;
+  } else {
+    var v = a[1];
+    return Belt_Option.mapWithDefault(Belt_Array.get(spacing, v), /* `px */[
+                25096,
+                v
+              ], (function (x) {
+                  return /* `px */[
+                          25096,
+                          x
+                        ];
+                }));
+  }
+}
+
+function make(p, pt, pr, pb, pl, px, py) {
+  return /* record */[
+          /* top */convert(calculate(p, py, pt)),
+          /* bottom */convert(calculate(p, py, pb)),
+          /* left */convert(calculate(p, px, pl)),
+          /* right */convert(calculate(p, px, pr))
+        ];
+}
+
+function makeMargin(p, pt, pr, pb, pl, px, py) {
+  return /* record */[
+          /* top */convertMargin(calculate(p, py, pt)),
+          /* bottom */convertMargin(calculate(p, py, pb)),
+          /* left */convertMargin(calculate(p, px, pl)),
+          /* right */convertMargin(calculate(p, px, pr))
+        ];
+}
+
 var System = /* module */[
   /* calculate */calculate,
-  /* make */make
+  /* convert */convert,
+  /* convertMargin */convertMargin,
+  /* make */make,
+  /* makeMargin */makeMargin
 ];
 
 var Theme = /* module */[
@@ -67,9 +104,25 @@ function Box(Props) {
   var py = Props.py;
   var children = Props.children;
   var scaleValue = make(p, pt, pr, pb, pl, px, py);
+  var createPadding = function (raw) {
+    return Css.style(/* :: */[
+                Css.paddingTop(raw[/* top */0]),
+                /* :: */[
+                  Css.paddingRight(raw[/* right */3]),
+                  /* :: */[
+                    Css.paddingLeft(raw[/* left */2]),
+                    /* :: */[
+                      Css.paddingBottom(raw[/* bottom */1]),
+                      /* [] */0
+                    ]
+                  ]
+                ]
+              ]);
+  };
+  createPadding(scaleValue);
   return React.createElement("div", {
               className: Css.style(/* :: */[
-                    Css.padding(scaleValue),
+                    Css.padding(scaleValue[/* top */0]),
                     /* [] */0
                   ])
             }, children);
