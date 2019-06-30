@@ -3,6 +3,19 @@
 
 var Css = require("bs-css/src/Css.js");
 var React = require("react");
+var Belt_Array = require("bs-platform/lib/js/belt_Array.js");
+var Belt_Option = require("bs-platform/lib/js/belt_Option.js");
+
+var spacing = /* array */[
+  4,
+  8,
+  12,
+  16,
+  24,
+  32,
+  48,
+  72
+];
 
 function calculate(main, axis, individual) {
   if (individual !== undefined) {
@@ -17,17 +30,31 @@ function calculate(main, axis, individual) {
 }
 
 function make(p, pt, pr, pb, pl, px, py) {
-  return /* record */[
-          /* paddingTop */calculate(p, py, pt),
-          /* paddingBottom */calculate(p, py, pb),
-          /* paddingLeft */calculate(p, px, pl),
-          /* paddingRight */calculate(p, px, pr)
-        ];
+  var value = calculate(p, py, pt);
+  if (typeof value === "number" || value[0] !== 25744) {
+    return value;
+  } else {
+    var v = value[1];
+    return Belt_Option.mapWithDefault(Belt_Array.get(spacing, v), /* `px */[
+                25096,
+                v
+              ], (function (x) {
+                  return /* `px */[
+                          25096,
+                          x
+                        ];
+                }));
+  }
 }
 
 var System = /* module */[
   /* calculate */calculate,
   /* make */make
+];
+
+var Theme = /* module */[
+  /* spacing */spacing,
+  /* System */System
 ];
 
 function Box(Props) {
@@ -39,10 +66,10 @@ function Box(Props) {
   var px = Props.px;
   var py = Props.py;
   var children = Props.children;
-  make(p, pt, pr, pb, pl, px, py);
+  var scaleValue = make(p, pt, pr, pb, pl, px, py);
   return React.createElement("div", {
               className: Css.style(/* :: */[
-                    Css.padding(Css.px(10)),
+                    Css.padding(scaleValue),
                     /* [] */0
                   ])
             }, children);
@@ -50,6 +77,6 @@ function Box(Props) {
 
 var make$1 = Box;
 
-exports.System = System;
+exports.Theme = Theme;
 exports.make = make$1;
 /* Css Not a pure module */
